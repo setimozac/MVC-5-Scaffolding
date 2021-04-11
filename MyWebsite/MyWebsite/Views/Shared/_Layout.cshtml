@@ -1,0 +1,55 @@
+﻿@using MyWebsite.Helper
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body style="background-color:#424242">
+
+    <div class="navbar navbar-inverse" style="color:yellow">
+        <ul class="nav navbar-nav" >
+            <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("Index") ? Colors.selected : "color:#ffc107;" })</li>
+            <li>@Html.ActionLink("About", "About", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("About") ? Colors.selected : "color:#ffc107;" })</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("Contact")? Colors.selected : "color:#ffc107;" })</li>
+        </ul>
+        <div style="padding-right:15px;">
+            @Html.Partial("_LoginPartial")
+        </div>
+        
+    </div>
+
+    <div class="" style="width:90%;margin:auto">
+        
+        @RenderBody()
+    </div>
+
+    
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+@*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+    @Html.Partial("_LoginPartial")
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+</div>*@
