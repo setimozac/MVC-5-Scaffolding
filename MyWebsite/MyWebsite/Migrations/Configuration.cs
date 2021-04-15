@@ -21,7 +21,6 @@ namespace MyWebsite.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-
             if (!context.Roles.Any(r => r.Name == RoleName.CanManage))
             {
                 var store = new RoleStore<IdentityRole>(context);
@@ -35,12 +34,11 @@ namespace MyWebsite.Migrations
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "admin@admin.com",  Email = "admin@admin.com" };
+                var user = new ApplicationUser { UserName = "admin@admin.com", Email = "admin@admin.com" };
 
                 manager.Create(user, "Adminpass123");
                 manager.AddToRole(user.Id, RoleName.CanManage);
             }
-
         }
     }
 }

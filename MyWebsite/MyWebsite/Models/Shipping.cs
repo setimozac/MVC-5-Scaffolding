@@ -19,6 +19,6 @@ namespace MyWebsite.Models
         public string address { get; set; }
 
         
-        public Purchase Purchase { get; set; }
+        public virtual Purchase Purchase { get; set; }
     }
 }

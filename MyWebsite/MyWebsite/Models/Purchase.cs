@@ -18,7 +18,7 @@ namespace MyWebsite.Models
         public ApplicationUser User { get; set; }
 
         [Required]
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [Required]
         [Display(Name ="purchased On")]
@@ -26,6 +26,10 @@ namespace MyWebsite.Models
 
         [Display(Name ="Purchase Method")]
         public Payments Payment { get; set; }
+
+        //[Required]
+        //[Range(1,10)]
+        //public int Quantity { get; set; }
     }
 }
 

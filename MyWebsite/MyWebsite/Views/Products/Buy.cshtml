@@ -1,0 +1,114 @@
+﻿@using MyWebsite.Helper
+@using MyWebsite.Models
+@model MyWebsite.ViewModel.BuyViewModel
+
+@{
+    ViewBag.Title = "Buy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Buy</h2>
+
+
+
+
+    <div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt style=@Colors.LightColorTitle>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd style=@Colors.DarkText>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt style=@Colors.LightColorTitle>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd style=@Colors.DarkText>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt style=@Colors.LightColorTitle>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd style=@Colors.DarkText>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            @if (Model.PImagesDb != null)
+            {
+                foreach (var img in Model.PImagesDb.ToList())
+                {
+                    <div class="img-thumbnail" style="margin:10px;">
+                        @Html.GetThumbnail(img.Image, 400, 400)
+                    </div>
+
+                }
+            }
+
+        </dl>
+    </div>
+
+
+    <p style="color:red; font-weight:300">@ViewBag.ErrMessage</p>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Product</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ProductId)
+
+    <div class="form-group" style=@Colors.LightColorTitle>
+        @Html.LabelFor(model => model.Payment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="color:black">
+            @Html.DropDownListFor(model => model.Payment, new SelectList(Enum.GetValues(typeof(Payments))), "Select Payment")
+        </div>
+    </div>
+
+    <div class="form-group" style=@Colors.LightColorTitle>
+        @Html.LabelFor(model => model.PurchaseQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="color:black">
+            @Html.EditorFor(model => model.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PurchaseQuantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" style=@Colors.LightColorTitle>
+        @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10" style="color:black">
+            @Html.TextAreaFor(model => model.address, 5, 50, new { htmlAttributes = new { @class = "form-control", @rows = "5" } })
+            @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Pay" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+    }
+}
+
+
+
+
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-darl", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
+</p>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

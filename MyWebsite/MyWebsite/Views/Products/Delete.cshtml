@@ -1,4 +1,5 @@
-﻿@model MyWebsite.Models.Product
+﻿@using MyWebsite.Helper
+@model MyWebsite.Models.Product
 
 @{
     ViewBag.Title = "Delete";
@@ -7,42 +8,50 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3 style="color:orange">Are you sure you want to delete this?</h3>
 <div>
     <h4>Product</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Description)
         </dd>
 
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Price)
         </dd>
 
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Quantity)
         </dt>
 
-        <dd>
+        <dd style="@Colors.DarkText margin-bottom:30px">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
+        @foreach (var img in Model.ProductImages.ToList())
+        {
+        <div class="img-thumbnail">
+            @Html.GetThumbnail(img.Image, 300, 300)
+        </div>
+            
+        }
+        
 
     </dl>
 
@@ -50,8 +59,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info" })
         </div>
     }
 </div>

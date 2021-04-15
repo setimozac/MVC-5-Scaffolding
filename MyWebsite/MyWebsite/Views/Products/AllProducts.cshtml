@@ -1,0 +1,37 @@
+﻿@using MyWebsite.Helper
+@using PagedList.Mvc
+@*@model IEnumerable<MyWebsite.Models.Product>*@
+@model PagedList.IPagedList<MyWebsite.Models.Product>
+
+@{
+    ViewBag.Title = "AllProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<div class="row" style="width:80%;margin:auto">
+    @foreach (var product in Model)
+    {
+
+        <div class="col-sm-6 col-md-4" style="background-color:black;">
+            <div class="thumbnail" style="background-color:black;border:solid 1px #c29204; border-radius:5mm">
+                @Html.GetThumbnail(product.ProductImages.ToList()[0].Image, 300, 300)
+                <div class="caption">
+                    <h3 style="color:#855d00">@product.Name</h3>
+                    <h5 style="@Colors.LightColorText display:inline-block;float:right">@product.Price</h5>
+                    <p style="color:#4a3401; height:55px">@HtmlExtentions.MyStripHtml(product.Description)</p>
+                    <p>@Html.ActionLink("Buy", "Details", new { id = product.ProductId }, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" }) @Html.ActionLink("Add to Cart", "Create", null, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })</p>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
+
+
+@Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, sortOrder = ViewBag.sortOrder, sortDir = ViewBag.sortDir, currentFilter = ViewBag.CurrentFilter }))
+

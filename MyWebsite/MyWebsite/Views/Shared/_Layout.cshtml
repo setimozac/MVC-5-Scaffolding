@@ -10,26 +10,44 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body style="background-color:#424242">
+<body style="background-color:black">
+    @{ 
+        string action = @ViewContext.RouteData.Values["action"].ToString();
+        string controller = @ViewContext.RouteData.Values["controller"].ToString();
+     }
+    <div class="container " style="">
+        <div class="row col-md-6 col-md-offset-3">
+            @using (Html.BeginForm(@action, @controller, FormMethod.Get))
+            {
 
-    <div class="navbar navbar-inverse" style="color:yellow">
-        <ul class="nav navbar-nav" >
-            <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("Index") ? Colors.selected : "color:#ffc107;" })</li>
+                <input class="form-control col-lg-8" style="@Colors.Yellow background-color:black;border:none;border-bottom:#ffc107 solid 1px;border-bottom-right-radius:5mm;"
+                       placeholder="Search..." name="searchString"
+                       type="text" value="@ViewBag.CurrentFilter" />
+
+                <button style="@Colors.DarkText border-color:#ffc107;background-color:black;border-bottom:none;border-top-left-radius:5mm;border-left:none" class="btn btn-default col-lg-2" type="submit">Go</button>
+
+            }
+        </div>
+    </div>
+
+    <div class="navbar navbar-inverse" style="color:yellow;background-color:#1f1a0e;border:solid 1px #ffc107;border-radius:3mm;border-top:none;border-left:none;border-right:none;margin:33px 4px;margin-top:10px">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @style = (@ViewContext.RouteData.Values["action"].Equals("Index") && @ViewContext.RouteData.Values["controller"].Equals("Home")) ? Colors.selected : "color:#ffc107;" })</li>
+            <li>@Html.ActionLink("Product", "Index", "Products", new { }, new { @style = (@ViewContext.RouteData.Values["action"].Equals("Index") && @ViewContext.RouteData.Values["controller"].Equals("Products")) ? Colors.selected : "color:#ffc107;" })</li>
             <li>@Html.ActionLink("About", "About", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("About") ? Colors.selected : "color:#ffc107;" })</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("Contact")? Colors.selected : "color:#ffc107;" })</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("Contact") ? Colors.selected : "color:#ffc107;" })</li>
         </ul>
         <div style="padding-right:15px;">
             @Html.Partial("_LoginPartial")
         </div>
-        
+
     </div>
 
     <div class="" style="width:90%;margin:auto">
-        
         @RenderBody()
     </div>
 
-    
+
 
 
     @Scripts.Render("~/bundles/jquery")

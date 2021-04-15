@@ -8,7 +8,7 @@ namespace MyWebsite.Models
 {
     public class Product
     {
-        [Key]
+        
         public int ProductId { get; set; }
         [Required]
         [StringLength(255)]
@@ -18,9 +18,8 @@ namespace MyWebsite.Models
         [Required]
         public double Price { get; set; }
 
-        public ICollection<ProductImage> ProductImage { get; set; }
-
         [Required]
         public int Quantity { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
     }
 }

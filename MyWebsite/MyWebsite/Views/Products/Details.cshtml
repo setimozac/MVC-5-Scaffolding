@@ -1,4 +1,6 @@
-﻿@model MyWebsite.Models.Product
+﻿@using MyWebsite.Helper
+@using MyWebsite.Models
+@model MyWebsite.Models.Product
 
 @{
     ViewBag.Title = "Details";
@@ -11,41 +13,55 @@
     <h4>Product</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Description)
         </dd>
 
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Price)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Price)
         </dd>
 
-        <dt>
+        <dt style=@Colors.LightColorTitle>
             @Html.DisplayNameFor(model => model.Quantity)
         </dt>
 
-        <dd>
+        <dd style=@Colors.DarkText>
             @Html.DisplayFor(model => model.Quantity)
         </dd>
+
+        @foreach (var img in Model.ProductImages.ToList())
+        {
+            <div class="img-thumbnail" style="margin:10px;">
+                @Html.GetThumbnail(img.Image, 400, 400)
+            </div>
+
+        }
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "Index")
+
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
+    @if (User.IsInRole(RoleName.CanManage))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-info" })
+    }
+
+    @Html.ActionLink("Buy", "Buy", new { id = Model.ProductId }, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })|
 </p>

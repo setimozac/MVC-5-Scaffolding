@@ -1,4 +1,7 @@
-﻿@model IEnumerable<MyWebsite.Models.Product>
+﻿@using MyWebsite.Helper
+@using PagedList.Mvc
+@*@model IEnumerable<MyWebsite.Models.Product>*@
+@model PagedList.IPagedList<MyWebsite.Models.Product>
 
 @{
     ViewBag.Title = "Index";
@@ -12,41 +15,59 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
+        <th style=@Colors.LightColorTitle>
+            @*@Html.DisplayNameFor(model => model.ProductImages)*@
+            Image
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
+        <th style=@Colors.LightColorTitle>
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            @Html.ActionLink("Name", "Index", new { sortOrder = "Name", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), searchString = ViewBag.CurrentFilter })
+            @Html.GetArrow((string)ViewBag.sortOrder, "Name", (string)ViewBag.sortDir)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
+        <th style=@Colors.LightColorTitle>
+            Description
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
+        <th style=@Colors.LightColorTitle>
+            @*@Html.DisplayNameFor(model => model.Price)*@
+            @Html.ActionLink("Price", "Index", new { sortOrder = "Price", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), searchString = ViewBag.CurrentFilter })
+            @Html.GetArrow((string)ViewBag.sortOrder, "Price", (string)ViewBag.sortDir)
+        </th>
+        <th style=@Colors.LightColorTitle>
+            @*@Html.DisplayNameFor(model => model.Quantity)*@
+            Quantity
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td style=@Colors.LightColorText>
+                @Html.GetThumbnail(item.ProductImages.ToList()[0].Image)
+            </td>
+            <td style=@Colors.LightColorText>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td style="@Colors.LightColorText max-width:400px;">
+                @{string str = HtmlExtentions.MyStripHtml(item.Description, 200);}
+                @Html.DisplayFor(modelItem => @str)
+            </td>
+            <td style=@Colors.LightColorText>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td style=@Colors.LightColorText>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td style=@Colors.LightColorText>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+@Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, sortOrder = ViewBag.sortOrder, sortDir = ViewBag.sortDir, currentFilter = ViewBag.CurrentFilter }))

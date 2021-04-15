@@ -8,12 +8,14 @@ namespace MyWebsite.Models
 {
     public class ProductImage
     {
-        [Key]
+        
         public int Id { get; set; }
-        public Product product { get; set; }
+        
 
         public byte[] Image { get; set; }
 
         public Boolean IsMain { get; set; }
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
