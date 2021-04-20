@@ -38,7 +38,7 @@ namespace MyWebsite.Controllers
             ViewBag.sortDir = sortDir;
 
             var product = db.Products.AsQueryable();
-
+            product = product.Where(x => x.Quantity > 0);
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -50,14 +50,45 @@ namespace MyWebsite.Controllers
 
             product = product.OrderBy(s => s.Name);
 
+
+            if (sortOrder != null)
+            {
+                switch (sortOrder.ToLower())
+                {
+                    case "name":
+                        if (sortDir.ToLower() == "desc")
+                        {
+                            product = product.OrderByDescending(s => s.Name);
+                        }
+                        else
+                        {
+                            product = product.OrderBy(s => s.Name);
+                        }
+                        break;
+                    case "price":
+                        if (sortDir.ToLower() == "desc")
+                        {
+                            product = product.OrderByDescending(s => s.Price);
+                        }
+                        else
+                        {
+                            product = product.OrderBy(s => s.Price);
+                        }
+                        break;
+                    default:
+                        product = product.OrderBy(s => s.Name);
+                        break;
+                }
+            }
+
+
+
             var data = product.ToPagedList(PageNumber, PageSize);
 
 
             if (User.Identity.IsAuthenticated && User.IsInRole(RoleName.CanManage))
                 return View(data);
-            //return View(db.Products.ToList());
             return View("AllProducts", data);
-            //return View("AllProducts", db.Products.ToList());
         }
 
         // GET: Products/Details/5
@@ -76,6 +107,7 @@ namespace MyWebsite.Controllers
         }
 
         // GET: Products/Create
+        [Authorize(Roles = RoleName.CanManage)]
         public ActionResult Create()
         {
             return View();
@@ -86,6 +118,7 @@ namespace MyWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManage)]
         public ActionResult Create(ProductAddModelView productVM)
         {
             if (ModelState.IsValid)
@@ -113,6 +146,7 @@ namespace MyWebsite.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = RoleName.CanManage)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -152,6 +186,7 @@ namespace MyWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManage)]
         public ActionResult Edit(ProductAddModelView productVM)
         {
             if (ModelState.IsValid)
@@ -216,6 +251,7 @@ namespace MyWebsite.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = RoleName.CanManage)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -233,10 +269,14 @@ namespace MyWebsite.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManage)]
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            var purchase = db.Purchases.Where(x => x.Product.ProductId == id).FirstOrDefault();
+            product.Quantity = 0;
+            db.Entry(product).State = EntityState.Modified;
+            //db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -302,7 +342,8 @@ namespace MyWebsite.Controllers
             ApplicationUser currentUser = null;
             if (User.Identity.IsAuthenticated)
             {
-                currentUser = db.Users.FirstOrDefault(x => x.Id == User.Identity.GetUserId());
+                string id = User.Identity.GetUserId();
+                currentUser = db.Users.FirstOrDefault(x => x.Id == id);
             }           
             purchase.User = currentUser ;
 
@@ -333,7 +374,9 @@ namespace MyWebsite.Controllers
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
 
-            return View("AllProducts", db.Products.ToList());
+            //return View("AllProducts", db.Products.ToList());
+            TempData["SuccessMessage"] = "your Purchase Number is: " + purchase.PurchaseId;
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

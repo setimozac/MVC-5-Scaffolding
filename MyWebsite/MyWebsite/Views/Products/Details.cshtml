@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 style=@Colors.DarkText>Details</h2>
 
 <div>
     <h4>Product</h4>
@@ -60,7 +60,7 @@
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
     @if (User.IsInRole(RoleName.CanManage))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-info" })
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-info", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm;background-color:black" })
     }
 
     @Html.ActionLink("Buy", "Buy", new { id = Model.ProductId }, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })|

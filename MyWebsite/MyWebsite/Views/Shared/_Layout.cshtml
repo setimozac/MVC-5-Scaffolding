@@ -6,34 +6,55 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <style>
+
+        .pagination > li, .pagination > li > a {
+            background-color: black !important;
+            border-color: #8f6903 !important;
+            color: #8f6903 !important;
+        }
+        .pagination > .active > a {
+            border-color: #ffc107 !important;
+            color: #ffc107 !important;
+        }
+        /*#ffc107*/
+        
+    </style>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body style="background-color:black">
-    @{ 
+    @{
         string action = @ViewContext.RouteData.Values["action"].ToString();
         string controller = @ViewContext.RouteData.Values["controller"].ToString();
-     }
-    <div class="container " style="">
-        <div class="row col-md-6 col-md-offset-3">
-            @using (Html.BeginForm(@action, @controller, FormMethod.Get))
-            {
+    }
 
-                <input class="form-control col-lg-8" style="@Colors.Yellow background-color:black;border:none;border-bottom:#ffc107 solid 1px;border-bottom-right-radius:5mm;"
-                       placeholder="Search..." name="searchString"
-                       type="text" value="@ViewBag.CurrentFilter" />
+    @*the search bar is only being shown in the list views*@
+    @if ((controller.Equals("Products") || (controller.Equals("Purchases") && User.Identity.IsAuthenticated)) && (action.Equals("Index")))
+    {
+        <div class="container " style="">
+            <div class="row col-md-12 col-md-offset-3">
+                @using (Html.BeginForm(@action, @controller, FormMethod.Get))
+                {
 
-                <button style="@Colors.DarkText border-color:#ffc107;background-color:black;border-bottom:none;border-top-left-radius:5mm;border-left:none" class="btn btn-default col-lg-2" type="submit">Go</button>
+                    <input class="form-control col-lg-8" style="@Colors.Yellow background-color:black;border:none;border-bottom:#ffc107 solid 1px;border-bottom-right-radius:5mm;"
+                           placeholder="Search..." name="searchString"
+                           type="text" value="@ViewBag.CurrentFilter" />
 
-            }
+                    <button style="@Colors.DarkText border-color:#ffc107;background-color:black;border-bottom:none;border-top-left-radius:5mm;border-left:none" class="btn btn-default col-lg-2" type="submit">Go</button>
+
+                }
+            </div>
         </div>
-    </div>
+    }
 
-    <div class="navbar navbar-inverse" style="color:yellow;background-color:#1f1a0e;border:solid 1px #ffc107;border-radius:3mm;border-top:none;border-left:none;border-right:none;margin:33px 4px;margin-top:10px">
+    @*#1f1a0e*@
+    <div class="navbar navbar-inverse" style="color:yellow;background-color:black;border:double 1px #ffc107;border-radius:0mm;border-top:none;border-left:none;border-right:none;margin:33px 4px 50px 4px;margin-top:10px">
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Home", "Index", "Home", new { }, new { @style = (@ViewContext.RouteData.Values["action"].Equals("Index") && @ViewContext.RouteData.Values["controller"].Equals("Home")) ? Colors.selected : "color:#ffc107;" })</li>
             <li>@Html.ActionLink("Product", "Index", "Products", new { }, new { @style = (@ViewContext.RouteData.Values["action"].Equals("Index") && @ViewContext.RouteData.Values["controller"].Equals("Products")) ? Colors.selected : "color:#ffc107;" })</li>
+            <li>@Html.ActionLink("Orders", "Index", "Purchases", new { }, new { @style = (@ViewContext.RouteData.Values["action"].Equals("Index") && @ViewContext.RouteData.Values["controller"].Equals("Purchases")) ? Colors.selected : "color:#ffc107;" })</li>
             <li>@Html.ActionLink("About", "About", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("About") ? Colors.selected : "color:#ffc107;" })</li>
             <li>@Html.ActionLink("Contact", "Contact", "Home", new { }, new { @style = @ViewContext.RouteData.Values["action"].Equals("Contact") ? Colors.selected : "color:#ffc107;" })</li>
         </ul>

@@ -8,19 +8,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
 </p>
 <table class="table">
     <tr>
         <th style=@Colors.LightColorTitle>
-            @*@Html.DisplayNameFor(model => model.ProductImages)*@
             Image
         </th>
         <th style=@Colors.LightColorTitle>
-            @*@Html.DisplayNameFor(model => model.Name)*@
             @Html.ActionLink("Name", "Index", new { sortOrder = "Name", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), searchString = ViewBag.CurrentFilter })
             @Html.GetArrow((string)ViewBag.sortOrder, "Name", (string)ViewBag.sortDir)
         </th>
@@ -28,12 +26,10 @@
             Description
         </th>
         <th style=@Colors.LightColorTitle>
-            @*@Html.DisplayNameFor(model => model.Price)*@
             @Html.ActionLink("Price", "Index", new { sortOrder = "Price", sortDir = string.IsNullOrEmpty(ViewBag.sortDir) ? "asc" : (ViewBag.sortDir == "asc" ? "desc" : "asc"), searchString = ViewBag.CurrentFilter })
             @Html.GetArrow((string)ViewBag.sortOrder, "Price", (string)ViewBag.sortDir)
         </th>
         <th style=@Colors.LightColorTitle>
-            @*@Html.DisplayNameFor(model => model.Quantity)*@
             Quantity
         </th>
         <th></th>
@@ -43,26 +39,27 @@
     {
         <tr>
 
-            <td style=@Colors.LightColorText>
+            <td style=@Colors.DarkText>
                 @Html.GetThumbnail(item.ProductImages.ToList()[0].Image)
             </td>
-            <td style=@Colors.LightColorText>
+            <td style=@Colors.DarkText>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td style="@Colors.LightColorText max-width:400px;">
+            <td style="@Colors.DarkText max-width:400px;">
                 @{string str = HtmlExtentions.MyStripHtml(item.Description, 200);}
                 @Html.DisplayFor(modelItem => @str)
             </td>
-            <td style=@Colors.LightColorText>
+            <td style=@Colors.DarkText>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td style=@Colors.LightColorText>
+            <td style=@Colors.DarkText>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td style=@Colors.LightColorText>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-dark", @style = @Colors.Yellow }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-dark", @style = @Colors.Yellow }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class = "btn btn-dark", @style = @Colors.Yellow })
             </td>
         </tr>
     }

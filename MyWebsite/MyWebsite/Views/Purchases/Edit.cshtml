@@ -1,0 +1,63 @@
+﻿@using MyWebsite.Helper
+@model MyWebsite.Models.Purchase
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style=@Colors.DarkText>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4 style=@Colors.DarkText>Purchase</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group" style=@Colors.DarkText>
+            @Html.LabelFor(model => model.PurchaseId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PurchaseId, new { htmlAttributes = new { @class = "form-control", @style = Colors.Yellow + "background-color:black;border:1px solid" } })
+                @Html.ValidationMessageFor(model => model.PurchaseId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style=@Colors.DarkText>
+            @Html.LabelFor(model => model.PurchaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PurchaseDate, new { htmlAttributes = new { @class = "form-control", @style = Colors.Yellow + "background-color:black;border:1px solid" } })
+                @Html.ValidationMessageFor(model => model.PurchaseDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style=@Colors.DarkText>
+            @Html.LabelFor(model => model.Payment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Payment, htmlAttributes: new { @class = "form-control", @style = Colors.Yellow + "background-color:black;border:1px solid" })
+                @Html.ValidationMessageFor(model => model.Payment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" style="color:forestgreen; border:1px solid;border-radius:2mm; background-color:black" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @*@Html.ActionLink("Back to List", "Index")*@
+    <p>
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-darl", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
+    </p>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,75 @@
+﻿@using MyWebsite.Helper
+@using PagedList.Mvc
+@model PagedList.IPagedList<MyWebsite.Models.Shipping>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Orders</h2>
+
+
+<table class="table">
+    <tr>
+        <th style=@Colors.LightColorTitle>
+            Image
+        </th>
+        <th style=@Colors.LightColorTitle>
+            Product Name
+        </th>
+        <th style=@Colors.LightColorTitle>
+            @*@Html.DisplayNameFor(model => model.Purchase)*@
+            Purchase Date
+        </th>
+        <th style=@Colors.LightColorTitle>
+            Shipping Date
+        </th>
+        <th style=@Colors.LightColorTitle>
+            Price
+        </th>
+
+        <th></th>
+    </tr>
+    @{ double sum = 0;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @foreach (var img in item.Purchase.Product.ProductImages)
+                {
+                <div class="img-thumbnail" style="border:1px solid #ffc107!important;padding:0;">
+                    @Html.GetThumbnail(img.Image, 100, 100)
+                </div>
+                    
+                }
+
+            </td>
+            <td style=@Colors.DarkText>
+                @Html.DisplayFor(modelItem => item.Purchase.Product.Name)
+            </td>
+            <td style=@Colors.DarkText>
+                @Html.DisplayFor(modelItem => item.Purchase.PurchaseDate)
+            </td>
+            <td style=@Colors.DarkText>
+                @Html.DisplayFor(modelItem => item.ShippingDate)
+            </td>
+            <td style=@Colors.DarkText>
+                @Html.DisplayFor(modelItem => item.Purchase.Product.Price)
+                @{ sum += item.Purchase.Product.Price;}
+            </td>
+        </tr>
+    }
+<tr>
+    <td style=@Colors.DarkText> </td>
+    <td style=@Colors.DarkText> </td>
+    <td style=@Colors.DarkText> </td>
+    <td style="@Colors.Yellow font-weight:900">Total: </td>
+    <td style="@Colors.Yellow font-weight:900"> @sum</td>
+</tr>
+    
+
+</table>
+
+
+@Html.PagedListPager(Model, Page => Url.Action("Index", new { Page, sortOrder = ViewBag.sortOrder, sortDir = ViewBag.sortDir, currentFilter = ViewBag.CurrentFilter }))

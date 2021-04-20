@@ -1,0 +1,54 @@
+﻿@using MyWebsite.Helper
+@model MyWebsite.Models.Purchase
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="@Colors.DarkText">Details</h2>
+
+<div>
+    <h4 style="@Colors.DarkText">Purchase</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt style="@Colors.LightColorText">
+            @Html.DisplayNameFor(model => model.PurchaseId)
+        </dt>
+
+        <dd style="@Colors.DarkText">
+            @Html.DisplayFor(model => model.PurchaseId)
+        </dd>
+
+        <dt style="@Colors.LightColorText">
+            @Html.DisplayNameFor(model => model.PurchaseDate)
+        </dt>
+
+        <dd style="@Colors.DarkText">
+            @Html.DisplayFor(model => model.PurchaseDate)
+        </dd>
+
+        <dt style="@Colors.LightColorText">
+            @Html.DisplayNameFor(model => model.Payment)
+        </dt>
+
+        <dd style="@Colors.DarkText">
+            @Html.DisplayFor(model => model.Payment)
+        </dd>
+
+        <dt style="@Colors.LightColorText">
+            Image
+        </dt>
+
+        <dd>
+            @Html.GetThumbnail(Model.Product.ProductImages.ToList()[0].Image)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-darl", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
+    |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-darl", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
+</p>

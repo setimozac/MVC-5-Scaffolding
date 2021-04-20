@@ -34,5 +34,7 @@ namespace MyWebsite.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<MyWebsite.ViewModel.PurchaseViewModel> PurchaseViewModels { get; set; }
     }
 }

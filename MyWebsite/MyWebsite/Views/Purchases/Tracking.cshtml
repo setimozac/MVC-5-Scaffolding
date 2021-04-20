@@ -1,0 +1,107 @@
+﻿@using MyWebsite.Helper
+@model MyWebsite.ViewModel.PurchaseViewModel
+
+@{
+    ViewBag.Title = "Tracking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="@Colors.DarkText margin-bottom:40px">Track your parcel</h2>
+<div style="margin-bottom:30px;">
+    @using (Html.BeginForm("Index", "Purchases", FormMethod.Get))
+    {
+        <input class="form-control col-lg-8" style="@Colors.Yellow background-color:black;border:none;border-bottom:#ffc107 solid 1px;border-bottom-right-radius:5mm;"
+               placeholder="Search..." name="purchaseId"
+               type="text" value="@ViewBag.CurrentFilter" />
+
+        <button style="@Colors.DarkText border-color:#ffc107;background-color:black;border-bottom:none;border-top-left-radius:5mm;border-left:none" class="btn btn-default col-lg-2" type="submit">Go</button>
+    }
+</div>
+@*VVOQFE3HFR9SW6PFUQ*@
+<div>
+    <h4 style="color:black">Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt style=@Colors.LightColorTitle>
+            @Html.DisplayNameFor(model => model.Purchase)
+        </dt>
+
+        <dd style=@Colors.DarkText>
+            @Html.DisplayFor(model => model.Purchase.PurchaseId)
+        </dd>
+
+        <dt style=@Colors.LightColorTitle>
+            @Html.DisplayNameFor(model => model.Purchase.Product)
+        </dt>
+
+        <dd style=@Colors.DarkText>
+            @Html.DisplayFor(model => model.Purchase.Product.Name)
+        </dd>
+
+        <dt style=@Colors.LightColorTitle>
+            @Html.DisplayNameFor(model => model.Purchase.PurchaseDate)
+        </dt>
+
+        <dd style=@Colors.DarkText>
+            @if (!string.IsNullOrEmpty(Model.Purchase.PurchaseId))
+            {
+                @Html.DisplayFor(model => model.Purchase.PurchaseDate)
+            }
+
+        </dd>
+
+        <dt style=@Colors.LightColorTitle>
+            @Html.DisplayNameFor(model => model.Purchase.Payment)
+        </dt>
+
+        <dd style=@Colors.DarkText>
+            @if (!string.IsNullOrEmpty(Model.Purchase.PurchaseId))
+            {
+                @Html.DisplayFor(model => model.Purchase.Payment)
+            }
+
+        </dd>
+
+        <dt style=@Colors.LightColorTitle>
+            @Html.DisplayNameFor(model => model.Purchase.Product.Price)
+        </dt>
+
+        <dd style=@Colors.DarkText>
+            @Html.DisplayFor(model => model.Purchase.Product.Price)
+        </dd>
+
+        <dt style=@Colors.LightColorTitle>
+            @Html.DisplayNameFor(model => model.Purchase.Product.ProductImages)
+        </dt>
+
+        <dd style=@Colors.DarkText>
+            @if (!string.IsNullOrEmpty(Model.Purchase.PurchaseId))
+            {
+                @Html.GetThumbnail(Model.Purchase.Product.ProductImages.ToList()[0].Image, 100, 100)
+            }
+        </dd>
+
+        @if (!string.IsNullOrEmpty(Model.Purchase.PurchaseId))
+        {
+            if (Model.Shipping.ShippingDate < DateTime.Now)
+            {
+                <dt style=@Colors.LightColorTitle>Shipped On</dt>
+            }
+            else
+            {
+                <dt style=@Colors.LightColorTitle>Will be Shipped On</dt>
+            }
+
+
+
+
+        <dd style=@Colors.DarkText>
+            @Html.DisplayFor(model => model.Shipping.ShippingDate)
+        </dd>
+
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to Products", "Index", "Products", null, new { @class = "btn btn-dark", @style = @Colors.Yellow + " border:1px solid;border-radius:2mm" })
+</p>

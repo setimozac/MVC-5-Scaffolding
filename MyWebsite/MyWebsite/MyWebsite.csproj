@@ -189,6 +189,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,6 +200,14 @@
     <Compile Include="Migrations\202104121301274_Initial.cs" />
     <Compile Include="Migrations\202104121301274_Initial.Designer.cs">
       <DependentUpon>202104121301274_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104161714586_second.cs" />
+    <Compile Include="Migrations\202104161714586_second.Designer.cs">
+      <DependentUpon>202104161714586_second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104161750421_Third.cs" />
+    <Compile Include="Migrations\202104161750421_Third.Designer.cs">
+      <DependentUpon>202104161750421_Third.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -214,6 +223,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\BuyViewModel.cs" />
     <Compile Include="ViewModel\ProductAddModelView.cs" />
+    <Compile Include="ViewModel\PurchaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
@@ -284,6 +294,13 @@
     <Content Include="Views\Products\AllProducts.cshtml" />
     <Content Include="Views\Products\Products.cshtml" />
     <Content Include="Views\Products\Buy.cshtml" />
+    <Content Include="Views\Purchases\Create.cshtml" />
+    <Content Include="Views\Purchases\Delete.cshtml" />
+    <Content Include="Views\Purchases\Details.cshtml" />
+    <Content Include="Views\Purchases\Edit.cshtml" />
+    <Content Include="Views\Purchases\Index.cshtml" />
+    <Content Include="Views\Purchases\Tracking.cshtml" />
+    <Content Include="Views\Purchases\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -304,6 +321,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104121301274_Initial.resx">
       <DependentUpon>202104121301274_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104161714586_second.resx">
+      <DependentUpon>202104161714586_second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104161750421_Third.resx">
+      <DependentUpon>202104161750421_Third.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

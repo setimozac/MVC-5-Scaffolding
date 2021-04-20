@@ -119,3 +119,5 @@ C:\Users\sizda\source\repos\ASP\MyWebsite\MyWebsite\bin\PagedList.dll
 C:\Users\sizda\source\repos\ASP\MyWebsite\MyWebsite\bin\PagedList.Mvc.dll
 C:\Users\sizda\source\repos\ASP\MyWebsite\MyWebsite\bin\PagedList.xml
 C:\Users\sizda\source\repos\ASP\MyWebsite\MyWebsite\bin\PagedList.Mvc.xml
+C:\Users\sizda\source\repos\ASP\MyWebsite\MyWebsite\obj\Debug\MyWebsite.Migrations.second.resources
+C:\Users\sizda\source\repos\ASP\MyWebsite\MyWebsite\obj\Debug\MyWebsite.Migrations.Third.resources
